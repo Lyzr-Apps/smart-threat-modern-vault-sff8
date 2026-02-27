@@ -257,7 +257,6 @@ const AGENTS: AgentInfo[] = [
 // --- Main Page ---
 
 export default function Page() {
-  const [codeContent, setCodeContent] = useState('')
   const [repoUrl, setRepoUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -271,20 +270,16 @@ export default function Page() {
   useEffect(() => {
     if (showSampleData) {
       setScanResult(SAMPLE_DATA)
-      setCodeContent(
-        `# config/settings.py\nAWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"\nAWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"\n\n# src/db/connection.js\nconst mongoUrl = "mongodb://admin:password123@prod-db.example.com:27017/mydb"\n\n# src/utils/test_data.js\nconst testUser = {\n  email: "john.doe@gmail.com",\n  ssn: "123-45-6789"\n}`
-      )
       setRepoUrl('https://github.com/example/vulnerable-app')
     } else {
       setScanResult(null)
-      setCodeContent('')
       setRepoUrl('')
       setSelectedHistoryId(null)
     }
   }, [showSampleData])
 
   const handleScan = useCallback(async () => {
-    if (!codeContent.trim() && !repoUrl.trim()) return
+    if (!repoUrl.trim()) return
 
     setLoading(true)
     setError(null)
@@ -293,7 +288,7 @@ export default function Page() {
     setActiveAgentId(MANAGER_AGENT_ID)
 
     try {
-      const message = `Scan the following code for security vulnerabilities, exposed secrets, PII, and provide remediation guidance:\n\n${repoUrl.trim() ? `Repository URL: ${repoUrl.trim()}\n\n` : ''}Code Content:\n\`\`\`\n${codeContent}\n\`\`\``
+      const message = `Scan the following GitHub repository for security vulnerabilities, exposed secrets, PII, and provide remediation guidance:\n\nRepository URL: ${repoUrl.trim()}\n\nPlease analyze the repository code for:\n1. Exposed API keys, passwords, tokens, database connection strings, and other credentials\n2. Personally identifiable information (PII) such as emails, SSNs, phone numbers\n3. Provide detailed remediation steps for each finding\n4. Assess compliance implications (GDPR, HIPAA, PCI-DSS, SOX)`
 
       const result = await callAIAgent(message, MANAGER_AGENT_ID)
 
@@ -325,7 +320,7 @@ export default function Page() {
       setLoading(false)
       setActiveAgentId(null)
     }
-  }, [codeContent, repoUrl])
+  }, [repoUrl])
 
   const handleSelectHistory = useCallback((entry: HistoryEntry) => {
     setScanResult(entry.data)
@@ -388,8 +383,6 @@ export default function Page() {
             <div className="flex-1 min-w-0 space-y-6">
               {/* Scan Input */}
               <ScanInput
-                codeContent={codeContent}
-                setCodeContent={setCodeContent}
                 repoUrl={repoUrl}
                 setRepoUrl={setRepoUrl}
                 loading={loading}
@@ -416,7 +409,7 @@ export default function Page() {
                   </div>
                   <h3 className="text-lg font-semibold text-slate-400 mb-2">Ready to Scan</h3>
                   <p className="text-sm text-slate-600 max-w-md mx-auto">
-                    Paste your code above or provide a repository URL to scan for exposed secrets, PII, and security vulnerabilities. Our AI agents will analyze your code and provide actionable remediation steps.
+                    Enter a GitHub repository URL above to scan for exposed secrets, PII, and security vulnerabilities. Our AI agents will analyze the repository and provide actionable remediation steps.
                   </p>
                 </div>
               )}

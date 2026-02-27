@@ -4,13 +4,10 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { FiSearch, FiCode, FiGithub, FiAlertCircle } from 'react-icons/fi'
+import { FiSearch, FiGithub, FiAlertCircle, FiShield } from 'react-icons/fi'
 
 interface ScanInputProps {
-  codeContent: string
-  setCodeContent: (val: string) => void
   repoUrl: string
   setRepoUrl: (val: string) => void
   loading: boolean
@@ -19,29 +16,28 @@ interface ScanInputProps {
 }
 
 export default function ScanInput({
-  codeContent,
-  setCodeContent,
   repoUrl,
   setRepoUrl,
   loading,
   error,
   onScan,
 }: ScanInputProps) {
-  const canScan = (codeContent.trim().length > 0 || repoUrl.trim().length > 0) && !loading
+  const canScan = repoUrl.trim().length > 0 && !loading
 
   return (
     <Card className="border-slate-700/50 bg-slate-900/80 backdrop-blur-sm">
       <CardHeader className="pb-4">
         <CardTitle className="text-lg font-semibold text-slate-100 flex items-center gap-2">
-          <FiCode className="h-5 w-5 text-cyan-400" />
-          Security Scan Configuration
+          <FiShield className="h-5 w-5 text-cyan-400" />
+          Repository Security Scan
         </CardTitle>
+        <p className="text-sm text-slate-500 mt-1">Enter a GitHub repository URL to scan for exposed secrets, PII, and security vulnerabilities.</p>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="repo-url" className="text-sm text-slate-300 flex items-center gap-2">
             <FiGithub className="h-4 w-4" />
-            Repository URL (optional)
+            Repository URL
           </Label>
           <Input
             id="repo-url"
@@ -49,24 +45,9 @@ export default function ScanInput({
             value={repoUrl}
             onChange={(e) => setRepoUrl(e.target.value)}
             disabled={loading}
-            className="bg-slate-800/60 border-slate-600/50 text-slate-100 placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20"
+            className="bg-slate-800/60 border-slate-600/50 text-slate-100 placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20 h-12 text-base"
           />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="code-content" className="text-sm text-slate-300 flex items-center gap-2">
-            <FiCode className="h-4 w-4" />
-            Code Content
-          </Label>
-          <Textarea
-            id="code-content"
-            placeholder="Paste your code here for security scanning...&#10;&#10;Example:&#10;const API_KEY = 'sk-live-abc123...';&#10;const db_password = 'admin123';&#10;const user_email = 'john@example.com';"
-            value={codeContent}
-            onChange={(e) => setCodeContent(e.target.value)}
-            disabled={loading}
-            rows={12}
-            className="bg-slate-800/60 border-slate-600/50 text-slate-100 placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20 font-mono text-sm resize-y min-h-[200px]"
-          />
+          <p className="text-xs text-slate-600">Provide the full GitHub repository URL (e.g., https://github.com/org/repo)</p>
         </div>
 
         {error && (
