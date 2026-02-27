@@ -1,0 +1,100 @@
+{
+  "workflow_name": "SecureShield Smart Data Loss Prevention",
+  "workflow_description": "Coordinates a multi-agent DLP scanning pipeline that detects exposed secrets, PII, and generates remediation guidance for code repositories",
+  "nodes": [
+    {
+      "id": "input_node",
+      "type": "Input",
+      "label": "Code/Repo URL for Scanning",
+      "nodeCategory": "input"
+    },
+    {
+      "id": "manager_agent",
+      "type": "Agent",
+      "label": "Threat Detection Manager",
+      "nodeCategory": "agent",
+      "agent_id": "69a171bde64a6ab5efd55c8b",
+      "agent_config": {
+        "name": "Threat Detection Manager",
+        "description": "Coordinates the scanning pipeline - routes repository content to detection sub-agents, aggregates findings into a unified threat report with severity scores and remediation steps",
+        "agent_role": "Senior Security Operations Manager",
+        "agent_goal": "Coordinate the complete DLP scanning pipeline by routing code/repository content to specialized detection sub-agents, then aggregate all findings into a unified, prioritized threat report with severity classifications and actionable remediation guidance.",
+        "provider_id": "openai",
+        "model": "gpt-4.1",
+        "temperature": 0.2,
+        "top_p": 1,
+        "managed_agents": [
+          "69a171a471517abcd697bca1",
+          "69a171a4095ad0316e3ee748",
+          "69a171a494cd820acecdfc42"
+        ]
+      }
+    },
+    {
+      "id": "secret_scanner_agent",
+      "type": "Agent",
+      "label": "Secret Scanner Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a171a471517abcd697bca1",
+      "agent_config": {
+        "name": "Secret Scanner Agent",
+        "description": "Analyzes code for exposed API keys, passwords, tokens, database connection strings, OAuth secrets, and other credentials using pattern recognition and contextual understanding",
+        "agent_role": "Expert Secret & Credential Detection Specialist",
+        "agent_goal": "Thoroughly analyze provided code content to identify all exposed secrets, credentials, API keys, tokens, passwords, database connection strings, and other sensitive authentication material with high precision and minimal false positives.",
+        "provider_id": "openai",
+        "model": "gpt-4.1",
+        "temperature": 0.1,
+        "top_p": 1
+      }
+    },
+    {
+      "id": "pii_detection_agent",
+      "type": "Agent",
+      "label": "PII Detection Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a171a4095ad0316e3ee748",
+      "agent_config": {
+        "name": "PII Detection Agent",
+        "description": "Scans code for personally identifiable information including email addresses, social security numbers, phone numbers, physical addresses, credit card numbers, and other PII",
+        "agent_role": "PII Detection & Data Privacy Specialist",
+        "agent_goal": "Detect all instances of personally identifiable information (PII) in code content, classify the sensitivity level, and identify potential data privacy regulation violations.",
+        "provider_id": "openai",
+        "model": "gpt-4.1",
+        "temperature": 0.1,
+        "top_p": 1
+      }
+    },
+    {
+      "id": "remediation_advisor_agent",
+      "type": "Agent",
+      "label": "Remediation Advisor Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a171a494cd820acecdfc42",
+      "agent_config": {
+        "name": "Remediation Advisor Agent",
+        "description": "Generates actionable remediation recommendations based on detected secrets and PII findings, including key rotation steps, notification procedures, and compliance remediation",
+        "agent_role": "Security Remediation & Compliance Advisor",
+        "agent_goal": "Generate comprehensive, actionable remediation guidance for all detected security findings including step-by-step fix instructions, key rotation procedures, affected party notification templates, and compliance remediation paths.",
+        "provider_id": "openai",
+        "model": "gpt-4.1",
+        "temperature": 0.3,
+        "top_p": 1
+      }
+    },
+    {
+      "id": "output_node",
+      "type": "Output",
+      "label": "Unified Threat Report",
+      "nodeCategory": "end"
+    }
+  ],
+  "edges": [
+    {"source": "input_node", "target": "manager_agent"},
+    {"source": "manager_agent", "target": "secret_scanner_agent"},
+    {"source": "manager_agent", "target": "pii_detection_agent"},
+    {"source": "manager_agent", "target": "remediation_advisor_agent"},
+    {"source": "secret_scanner_agent", "target": "output_node"},
+    {"source": "pii_detection_agent", "target": "output_node"},
+    {"source": "remediation_advisor_agent", "target": "output_node"}
+  ]
+}

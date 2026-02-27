@@ -1,0 +1,44 @@
+{
+  "agent_name": "PII Detection Agent",
+  "agent_id": "69a171a4095ad0316e3ee748",
+  "description": "Scans code for personally identifiable information including email addresses, social security numbers, phone numbers, physical addresses, credit card numbers, and other PII",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "pii_found": [
+      {
+        "type": "string",
+        "severity": "string",
+        "location": "string",
+        "description": "string",
+        "data_preview": "string",
+        "regulations_affected": "string"
+      }
+    ],
+    "total_pii": "number",
+    "privacy_risk_level": "string"
+  },
+  "example_response": {
+    "pii_found": [
+      {
+        "type": "Email Address",
+        "severity": "Medium",
+        "location": "src/utils/test_data.js:15",
+        "description": "Personal email address hardcoded in test data, may be a real user email",
+        "data_preview": "j***@gmail.com",
+        "regulations_affected": "GDPR, CCPA"
+      },
+      {
+        "type": "Social Security Number",
+        "severity": "Critical",
+        "location": "tests/fixtures/users.json:28",
+        "description": "Full SSN hardcoded in test fixture data",
+        "data_preview": "***-**-6789",
+        "regulations_affected": "GDPR, CCPA, SOX"
+      }
+    ],
+    "total_pii": 2,
+    "privacy_risk_level": "Critical - SSN exposure requires immediate remediation and potential breach notification"
+  }
+}

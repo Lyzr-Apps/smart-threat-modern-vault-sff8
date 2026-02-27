@@ -1,0 +1,58 @@
+{
+  "workflow_name": "SecureShield Smart Data Loss Prevention",
+  "status": "complete",
+  "agents": {
+    "threat_detection_manager": {
+      "agent_id": "69a171bde64a6ab5efd55c8b",
+      "name": "Threat Detection Manager",
+      "type": "manager",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.2,
+      "top_p": 1,
+      "managed_agents": [
+        "69a171a471517abcd697bca1",
+        "69a171a4095ad0316e3ee748",
+        "69a171a494cd820acecdfc42"
+      ],
+      "response_schema_file": "response_schemas/threat_detection_manager_response.json"
+    },
+    "secret_scanner_agent": {
+      "agent_id": "69a171a471517abcd697bca1",
+      "name": "Secret Scanner Agent",
+      "type": "sub-agent",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.1,
+      "top_p": 1,
+      "response_schema_file": "response_schemas/secret_scanner_agent_response.json"
+    },
+    "pii_detection_agent": {
+      "agent_id": "69a171a4095ad0316e3ee748",
+      "name": "PII Detection Agent",
+      "type": "sub-agent",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.1,
+      "top_p": 1,
+      "response_schema_file": "response_schemas/pii_detection_agent_response.json"
+    },
+    "remediation_advisor_agent": {
+      "agent_id": "69a171a494cd820acecdfc42",
+      "name": "Remediation Advisor Agent",
+      "type": "sub-agent",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "temperature": 0.3,
+      "top_p": 1,
+      "response_schema_file": "response_schemas/remediation_advisor_agent_response.json"
+    }
+  },
+  "agent_ids": [
+    "69a171bde64a6ab5efd55c8b",
+    "69a171a471517abcd697bca1",
+    "69a171a4095ad0316e3ee748",
+    "69a171a494cd820acecdfc42"
+  ],
+  "primary_agent_id": "69a171bde64a6ab5efd55c8b"
+}

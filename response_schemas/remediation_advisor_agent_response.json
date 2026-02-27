@@ -1,0 +1,42 @@
+{
+  "agent_name": "Remediation Advisor Agent",
+  "agent_id": "69a171a494cd820acecdfc42",
+  "description": "Generates actionable remediation recommendations based on detected secrets and PII findings, including key rotation steps, notification procedures, and compliance remediation",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "remediation_items": [
+      {
+        "finding_reference": "string",
+        "priority": "string",
+        "action": "string",
+        "detailed_steps": "string",
+        "compliance_notes": "string",
+        "timeline": "string"
+      }
+    ],
+    "overall_recommendation": "string"
+  },
+  "example_response": {
+    "remediation_items": [
+      {
+        "finding_reference": "AWS Access Key in config/settings.py:42",
+        "priority": "P0",
+        "action": "Rotate AWS credentials and migrate to secrets manager",
+        "detailed_steps": "1. Log into AWS IAM Console immediately. 2. Deactivate the exposed access key. 3. Generate a new access key pair. 4. Store new credentials in AWS Secrets Manager or environment variables. 5. Update application configuration to read from secrets manager. 6. Add config/settings.py to .gitignore. 7. Use git filter-branch or BFG to remove the key from git history. 8. Audit CloudTrail logs for unauthorized usage of the exposed key.",
+        "compliance_notes": "SOX compliance requires documented credential rotation procedures and audit trail. Record the incident in your security log.",
+        "timeline": "Immediate - within 1 hour"
+      },
+      {
+        "finding_reference": "SSN in tests/fixtures/users.json:28",
+        "priority": "P0",
+        "action": "Remove real SSN and replace with synthetic test data",
+        "detailed_steps": "1. Replace real SSN with a synthetic value (e.g., 000-00-0000 or use a faker library). 2. Scrub git history using BFG Repo-Cleaner. 3. Assess if the SSN belongs to a real individual. 4. If real, initiate breach notification procedure per CCPA/GDPR requirements. 5. Implement pre-commit hooks to detect SSN patterns.",
+        "compliance_notes": "GDPR Article 33 requires breach notification within 72 hours. CCPA requires notification to affected individuals.",
+        "timeline": "Immediate - within 2 hours, breach notification within 72 hours if real data"
+      }
+    ],
+    "overall_recommendation": "Critical findings require immediate action. Rotate all exposed credentials within 1 hour, remove all PII from codebase, and implement pre-commit hooks with secret scanning to prevent future exposure."
+  }
+}
