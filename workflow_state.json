@@ -3,7 +3,7 @@
   "status": "complete",
   "agents": {
     "threat_detection_manager": {
-      "agent_id": "69a171bde64a6ab5efd55c8b",
+      "agent_id": "69a280728e6d0e51fd5cd410",
       "name": "Threat Detection Manager",
       "type": "manager",
       "model": "gpt-4.1",
@@ -15,6 +15,8 @@
         "69a171a4095ad0316e3ee748",
         "69a171a494cd820acecdfc42"
       ],
+      "has_knowledge_base": true,
+      "rag_id": "69a28034f572c99c0ffbe5bf",
       "response_schema_file": "response_schemas/threat_detection_manager_response.json"
     },
     "secret_scanner_agent": {
@@ -49,10 +51,10 @@
     }
   },
   "agent_ids": [
-    "69a171bde64a6ab5efd55c8b",
+    "69a280728e6d0e51fd5cd410",
     "69a171a471517abcd697bca1",
     "69a171a4095ad0316e3ee748",
     "69a171a494cd820acecdfc42"
   ],
-  "primary_agent_id": "69a171bde64a6ab5efd55c8b"
+  "primary_agent_id": "69a280728e6d0e51fd5cd410"
 }

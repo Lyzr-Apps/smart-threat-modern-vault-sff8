@@ -1,7 +1,7 @@
 {
   "agent_name": "Threat Detection Manager",
-  "agent_id": "69a171bde64a6ab5efd55c8b",
-  "description": "Coordinates the scanning pipeline - routes repository content to detection sub-agents, aggregates findings into a unified threat report with severity scores and remediation steps",
+  "agent_id": "69a280728e6d0e51fd5cd410",
+  "description": "Coordinates the scanning pipeline with access to real-world security detection patterns from OWASP, MITRE CWE, TruffleHog, Gitleaks, and DumpsterDiver. Routes code to detection sub-agents, validates findings against known patterns, and produces a unified threat report. Never downgrades severity.",
   "agent_type": "json",
   "accessor": "result",
   "auto_generated": true,
@@ -50,47 +50,47 @@
     }
   },
   "example_response": {
-    "overall_risk_level": "Critical",
+    "overall_risk_level": "sample string",
     "scan_summary": {
-      "total_findings": 5,
-      "critical_count": 2,
-      "high_count": 1,
-      "medium_count": 1,
-      "low_count": 1
+      "total_findings": 0,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0
     },
     "secret_findings": [
       {
-        "type": "AWS Access Key",
-        "severity": "Critical",
-        "location": "config/settings.py:42",
-        "description": "Hardcoded AWS access key with potential full account access",
-        "exposed_value_preview": "AKIA...X7Q9"
+        "type": "sample string",
+        "severity": "sample string",
+        "location": "sample string",
+        "description": "sample string",
+        "exposed_value_preview": "sample string"
       }
     ],
     "pii_findings": [
       {
-        "type": "Email Address",
-        "severity": "Medium",
-        "location": "src/utils/test_data.js:15",
-        "description": "Personal email address hardcoded in test data file",
-        "data_preview": "j***@gmail.com"
+        "type": "sample string",
+        "severity": "sample string",
+        "location": "sample string",
+        "description": "sample string",
+        "data_preview": "sample string"
       }
     ],
     "remediation_steps": [
       {
-        "finding_reference": "AWS Access Key in config/settings.py:42",
-        "priority": "P0",
-        "action": "Rotate AWS credentials and move to environment variables",
-        "detailed_steps": "1. Immediately rotate the exposed AWS key in IAM console. 2. Move credentials to environment variables or AWS Secrets Manager. 3. Update .gitignore to prevent future exposure.",
-        "compliance_notes": "SOX compliance requires audit trail of credential rotation"
+        "finding_reference": "sample string",
+        "priority": "sample string",
+        "action": "sample string",
+        "detailed_steps": "sample string",
+        "compliance_notes": "sample string"
       }
     ],
     "compliance_summary": {
-      "gdpr_relevant": true,
+      "gdpr_relevant": false,
       "hipaa_relevant": false,
       "pci_dss_relevant": false,
-      "sox_relevant": true,
-      "notes": "PII exposure may require GDPR breach notification within 72 hours"
+      "sox_relevant": false,
+      "notes": "sample string"
     }
   }
 }

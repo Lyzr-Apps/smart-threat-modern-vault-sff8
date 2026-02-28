@@ -76,7 +76,7 @@ interface HistoryEntry {
 
 // --- Constants ---
 
-const MANAGER_AGENT_ID = '69a171bde64a6ab5efd55c8b'
+const MANAGER_AGENT_ID = '69a280728e6d0e51fd5cd410'
 
 const SAMPLE_DATA: ThreatReport = {
   overall_risk_level: 'Critical',
@@ -229,9 +229,9 @@ interface AgentInfo {
 
 const AGENTS: AgentInfo[] = [
   {
-    id: '69a171bde64a6ab5efd55c8b',
+    id: '69a280728e6d0e51fd5cd410',
     name: 'Threat Detection Manager',
-    role: 'Orchestrates scanning pipeline and aggregates findings',
+    role: 'Orchestrates scanning with real-world security pattern database',
     icon: <FiShield className="h-3.5 w-3.5" />,
   },
   {
